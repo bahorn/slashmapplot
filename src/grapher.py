@@ -20,7 +20,6 @@ class MapGraph:
         for line in data.split('\n'):
             name = MapGraph.node_name(line)
             if name != '':
-                print(stack)
                 level = int(len(line.split(name)[0])/2)
                 if level >= len(stack):
                     stack.append(name)
