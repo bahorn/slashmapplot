@@ -3,6 +3,8 @@ code to make graphs from network graphs.
 """
 import networkx as nx
 import matplotlib.pyplot as plt
+import json
+from networkx.readwrite import json_graph
 
 class MapGraph:
     """
@@ -32,6 +34,9 @@ class MapGraph:
                     batch.append((stack[-2], stack[-1]))
         self.graph = nx.Graph()
         self.graph.add_edges_from(batch)
+
+    def json(self):
+        return json.dumps(json_graph.node_link_data(self.graph))
 
     @staticmethod
     def node_name(line):
