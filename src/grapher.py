@@ -20,18 +20,19 @@ class MapGraph:
         stack = []
         batch = []
         for line in data.split('\n'):
-            name = MapGraph.node_name(line)
-            if name != '':
-                level = int(len(line.split(name)[0])/2)
-                if level >= len(stack):
-                    stack.append(name)
-                else:
-                    stack = stack[:level]
-                    stack.append(name)
+            level, name = MapGraph.node_name(line)
+            if name == '':
+                continue
 
-                
-                if len(stack) > 1:
-                    batch.append((stack[-2], stack[-1]))
+            if level >= len(stack):
+                stack.append(name)
+            else:
+                stack = stack[:level]
+                stack.append(name)
+            
+            if len(stack) > 1:
+                batch.append((stack[-2], stack[-1]))
+
         self.graph = nx.Graph()
         self.graph.add_edges_from(batch)
 
@@ -45,16 +46,18 @@ class MapGraph:
         """
         start = True
         name = ''
+        level = 0
         for char in line:
             if start and char in ['`', '-', '|', ' ']:
+                level += 1
                 continue
-            else:
-                start = False
+            
+            start = False
 
-            if not start and char in ['(', ' ']:
+            if char in ['(', ' ']:
                 break
             name += char
-        return name
+        return int(level/2), name
 
 if __name__ == "__main__":
     plt.figure(figsize=(20, 20), dpi=80)
