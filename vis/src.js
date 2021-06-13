@@ -1,15 +1,14 @@
+/* This doesn't handle resizes very well. */
 var width = window.innerWidth;
 var height = window.innerHeight; 
 
-var svg = d3.select("#d3").append("svg")                                  
-  .attr("width", width)
-  .attr("height", height)
+var svg = d3.select("#d3").append("svg")
+  .attr('width', width)
+  .attr('height', height)
   .call(d3.zoom().on("zoom", function () {
       svg.attr("transform", d3.event.transform)
   }))
   .append("g")
-
-
 
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
