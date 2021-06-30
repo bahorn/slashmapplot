@@ -1,6 +1,6 @@
 # MAP plotter
 
-Plots the output of `/map` of an UnrealIRCd network.
+Plots the output of `/link` of an UnrealIRCd network.
 
 ## Setup
 
