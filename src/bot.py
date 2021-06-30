@@ -1,17 +1,18 @@
 import pydle
 
 class MyClient(pydle.Client):
-    mapresp = []
-
     async def on_connect(self):
         await super().on_connect()
-        await self.rawmsg('MAP')
+        await self.rawmsg('LINKS')
+        self._links = []
         
     async def on_unknown(self, msg):
-        if msg.command == 6:
-            self.mapresp.append(msg.params[1])
-        elif msg.command == 7:
+        if msg.command == 364:
+            link = (msg.params[1], msg.params[2])
+            if link[0] != link[1]:
+                self._links.append(link)
+        elif msg.command == 365:
             await self.disconnect()
 
-    def getmap(self):
-        return '\n'.join(self.mapresp)
+    def links(self):
+        return self._links
